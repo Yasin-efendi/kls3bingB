@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Soal Ujian Sekolah - Bahasa Inggris Kelas 3 SD</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #ffa95c 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.5);
+        }
+
+        .page-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .option-card {
+            background: rgba(255, 255, 255, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateX(5px);
+        }
+
+        .option-card.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+            transform: scale(1.02);
+        }
+
+        .option-card.correct {
+            background: #28a745;
+            color: white;
+            border-color: #28a745;
+        }
+
+        .option-card.wrong {
+            background: #dc3545;
+            color: white;
+            border-color: #dc3545;
+        }
+
+        .btn-custom {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            color: white;
+        }
+
+        .graduation-icon {
+            font-size: 4rem;
+            color: #fff;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .subtheme-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .subtheme-list li {
+            background: rgba(255, 255, 255, 0.4);
+            margin: 8px 0;
+            padding: 10px 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .subtheme-list li i {
+            color: #fff;
+        }
+
+        .question-image {
+            max-width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin: 15px 0;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .answer-summary {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .answer-item {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.3);
+        }
+
+        .answer-item.correct {
+            border-left: 4px solid #28a745;
+        }
+
+        .answer-item.wrong {
+            border-left: 4px solid #dc3545;
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: none;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .form-control {
+            border-radius: 15px;
+            padding: 12px;
+            border: 2px solid rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.8);
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            border-color: #667eea;
+        }
+
+        .progress {
+            height: 10px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.3);
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .graduation-icon { font-size: 3rem; }
+            .score-circle { width: 120px; height: 120px; font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Page 1: Welcome -->
+    <div id="page1" class="page-section active">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="glass-card p-5 text-center">
+                        <i class="fas fa-graduation-cap graduation-icon mb-3"></i>
+                        <h1 class="text-white mb-3 fw-bold">Latihan Soal Ujian Sekolah</h1>
+                        <h3 class="text-white mb-4">Bahasa Inggris Kelas 3 SD</h3>
+                        
+                        <div class="text-start mb-4">
+                            <h5 class="text-white mb-3"><i class="fas fa-list-ul me-2"></i>Subtema:</h5>
+                            <ul class="subtheme-list">
+                                <li><i class="fas fa-check-circle"></i> Numbers (Angka)</li>
+                                <li><i class="fas fa-check-circle"></i> Spelling (Ejaan)</li>
+                                <li><i class="fas fa-check-circle"></i> Quantity/Objects (Jumlah/Benda)</li>
+                                <li><i class="fas fa-check-circle"></i> Basic Math (Matematika Dasar)</li>
+                                <li><i class="fas fa-check-circle"></i> Family Members (Anggota Keluarga)</li>
+                                <li><i class="fas fa-check-circle"></i> Daily Activities (Aktivitas Sehari-hari)</li>
+                                <li><i class="fas fa-check-circle"></i> Describing Objects (Mendeskripsikan Benda)</li>
+                                <li><i class="fas fa-check-circle"></i> Communication (Komunikasi)</li>
+                                <li><i class="fas fa-check-circle"></i> Reading Comprehension (Pemahaman Bacaan)</li>
+                            </ul>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="text-white fw-bold mb-2"><i class="fas fa-user me-2"></i>Nama Siswa:</label>
+                            <input type="text" id="studentName" class="form-control" placeholder="Masukkan nama lengkap...">
+                        </div>
+
+                        <button onclick="startQuiz()" class="btn btn-custom btn-lg w-100">
+                            <i class="fas fa-play me-2"></i>Mulai Quiz
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 2: Quiz -->
+    <div id="page2" class="page-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-7">
+                    <div class="glass-card p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="text-white fw-bold"><i class="fas fa-user me-2"></i><span id="displayName"></span></span>
+                            <span class="text-white fw-bold">Soal <span id="currentQ">1</span>/10</span>
+                        </div>
+                        
+                        <div class="progress">
+                            <div id="progressBar" class="progress-bar" style="width: 10%"></div>
+                        </div>
+
+                        <div id="questionContainer">
+                            <!-- Question will be loaded here -->
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <button onclick="previousQuestion()" id="btnPrev" class="btn btn-custom" disabled>
+                                <i class="fas fa-arrow-left me-2"></i>Sebelumnya
+                            </button>
+                            <button onclick="nextQuestion()" id="btnNext" class="btn btn-custom">
+                                Selanjutnya<i class="fas fa-arrow-right ms-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page 3: Results -->
+    <div id="page3" class="page-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="glass-card p-5 text-center">
+                        <i class="fas fa-trophy text-white mb-3" style="font-size: 4rem;"></i>
+                        <h2 class="text-white mb-3">Hasil Quiz</h2>
+                        
+                        <div class="score-circle" id="scoreDisplay">0</div>
+                        
+                        <h4 class="text-white mb-2">Nama: <span id="resultName"></span></h4>
+                        <p class="text-white mb-4" id="scoreText"></p>
+
+                        <div class="text-start mb-4">
+                            <h5 class="text-white mb-3">Rangkuman Jawaban:</h5>
+                            <div id="answerSummary" class="answer-summary">
+                                <!-- Summary will be loaded here -->
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button onclick="showDiscussion()" class="btn btn-custom">
+                                <i class="fas fa-book-open me-2"></i>Lihat Pembahasan
+                            </button>
+                            <button onclick="restartQuiz()" class="btn btn-outline-light btn-lg">
+                                <i class="fas fa-redo me-2"></i>Ulangi Quiz
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Discussion Modal -->
+    <div class="modal fade" id="discussionModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-lightbulb me-2"></i>Pembahasan Soal</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="discussionContent">
+                    <!-- Discussion content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Quiz Data
+        const questions = [
+            {
+                id: 1,
+                question: "Look at the sequence: thirty-eight, thirty-nine, ... , forty-one. The missing number is….",
+                image: null,
+                options: ["forty", "thirty", "twenty", "fifty"],
+                correct: 0,
+                explanation: "Urutan angka setelah 39 (thirty-nine) adalah 40 (forty)."
+            },
+            {
+                id: 2,
+                question: "F _ f t _ _ n<br>The missing letters to complete the number '15' are….",
+                image: null,
+                options: ["i and e", "i and i", "e and e", "a and e"],
+                correct: 0,
+                explanation: "Ejaan yang benar untuk 15 adalah Fifteen (F-i-f-t-e-e-n), maka huruf yang hilang adalah i dan e."
+            },
+            {
+                id: 3,
+                question: "How many pencils are there?",
+                image: "https://i.ibb.co.com/vvfdLgTZ/Soal-PR-no-3.jpg",
+                options: ["There are twenty-four pencils.", "There are forty-two pencils.", "There are fourteen pencils.", "There are four pencils."],
+                correct: 1,
+                explanation: "Angka 42 dalam Bahasa Inggris adalah forty-two."
+            },
+            {
+                id: 4,
+                question: "Ten plus fifteen is….",
+                image: null,
+                options: ["twenty", "twenty-five", "thirty", "thirty-five"],
+                correct: 1,
+                explanation: "10 + 15 = 25. Angka 25 dalam Bahasa Inggris adalah twenty-five."
+            },
+            {
+                id: 5,
+                question: "My mother's sister is my….",
+                image: null,
+                options: ["Grandmother", "Sister", "Aunt", "Brother"],
+                correct: 2,
+                explanation: "Saudara perempuan ibu disebut bibi (aunt)."
+            },
+            {
+                id: 6,
+                question: "I have a brother. His name is Rio. Rio is my father's….",
+                image: null,
+                options: ["Daughter", "Son", "Brother", "Sister"],
+                correct: 1,
+                explanation: "Saudara laki-laki saya adalah anak laki-laki (son) dari ayah saya."
+            },
+            {
+                id: 7,
+                question: "It is six o'clock. It is time for….",
+                image: "https://i.ibb.co.com/1t69599y/Soal-PR-no-7.jpg",
+                options: ["Breakfast", "Dinner", "Lunch", "Sleeping"],
+                correct: 0,
+                explanation: "Pukul 06.00 pagi adalah waktu untuk sarapan (breakfast)."
+            },
+            {
+                id: 8,
+                question: "Arrange the words:<br>- has - a - blue - Made - shirt",
+                image: null,
+                options: ["Made has a blue shirt.", "Made blue has a shirt.", "A blue shirt Made has.", "Shirt has a blue Made."],
+                correct: 0,
+                explanation: "Struktur kalimat yang benar: Subjek (Made) + Verb (has) + Object (a blue shirt)."
+            },
+            {
+                id: 9,
+                question: 'Joshua: "How are you, Cici?"<br>Cici: "________________"',
+                image: null,
+                options: ["I am Cici.", "Thank you.", "I am fine, thank you.", "Nice to meet you."],
+                correct: 2,
+                explanation: 'Pertanyaan "How are you?" (apa kabar) dijawab dengan "I am fine, thank you" (saya baik-baik saja).'
+            },
+            {
+                id: 10,
+                question: 'Read the text!<br>"Aisyah is a student. She has 20 rulers and 10 erasers in her bag."<br>How many erasers does Aisyah have?',
+                image: null,
+                options: ["Twenty", "Twelve", "Ten", "Two"],
+                correct: 2,
+                explanation: "Berdasarkan teks, jumlah penghapus (erasers) adalah 10 (ten)."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let answers = new Array(questions.length).fill(null);
+        let studentName = "";
+
+        function startQuiz() {
+            studentName = document.getElementById('studentName').value.trim();
+            if (!studentName) {
+                alert('Silakan masukkan nama siswa terlebih dahulu!');
+                return;
+            }
+            document.getElementById('displayName').textContent = studentName;
+            showPage('page2');
+            loadQuestion();
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            const container = document.getElementById('questionContainer');
+            
+            let html = `
+                <h4 class="text-white mb-4">${q.question}</h4>
+            `;
+            
+            if (q.image) {
+                html += `<img src="${q.image}" alt="Question Image" class="question-image">`;
+            }
+            
+            html += `<div class="mt-4">`;
+            q.options.forEach((opt, idx) => {
+                const selected = answers[currentQuestion] === idx ? 'selected' : '';
+                html += `
+                    <div class="option-card ${selected}" onclick="selectAnswer(${idx})">
+                        <strong>${String.fromCharCode(65 + idx)}.</strong> ${opt}
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            
+            container.innerHTML = html;
+            
+            // Update progress
+            document.getElementById('currentQ').textContent = currentQuestion + 1;
+            document.getElementById('progressBar').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+            
+            // Update buttons
+            document.getElementById('btnPrev').disabled = currentQuestion === 0;
+            document.getElementById('btnNext').innerHTML = currentQuestion === questions.length - 1 ? 
+                'Selesai<i class="fas fa-check ms-2"></i>' : 
+                'Selanjutnya<i class="fas fa-arrow-right ms-2"></i>';
+        }
+
+        function selectAnswer(index) {
+            answers[currentQuestion] = index;
+            loadQuestion();
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (answers[currentQuestion] === null) {
+                alert('Silakan pilih jawaban terlebih dahulu!');
+                return;
+            }
+            
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            let score = 0;
+            answers.forEach((ans, idx) => {
+                if (ans === questions[idx].correct) score++;
+            });
+            
+            const percentage = (score / questions.length) * 100;
+            
+            document.getElementById('resultName').textContent = studentName;
+            document.getElementById('scoreDisplay').textContent = score;
+            document.getElementById('scoreText').textContent = `${percentage}% - ${getScoreMessage(percentage)}`;
+            
+            // Generate summary
+            let summaryHtml = '';
+            questions.forEach((q, idx) => {
+                const isCorrect = answers[idx] === q.correct;
+                const statusClass = isCorrect ? 'correct' : 'wrong';
+                const statusIcon = isCorrect ? 'fa-check' : 'fa-times';
+                const statusText = isCorrect ? 'Benar' : 'Salah';
+                
+                summaryHtml += `
+                    <div class="answer-item ${statusClass}">
+                        <strong>Soal ${idx + 1}:</strong> 
+                        <i class="fas ${statusIcon}"></i> ${statusText}
+                    </div>
+                `;
+            });
+            document.getElementById('answerSummary').innerHTML = summaryHtml;
+            
+            showPage('page3');
+        }
+
+        function getScoreMessage(percentage) {
+            if (percentage >= 90) return "Luar Biasa! 🌟";
+            if (percentage >= 80) return "Hebat! 👍";
+            if (percentage >= 70) return "Bagus! 💪";
+            if (percentage >= 60) return "Cukup Baik 📚";
+            return "Tetap Semangat! 🎯";
+        }
+
+        function showDiscussion() {
+            let html = '';
+            questions.forEach((q, idx) => {
+                const userAnswer = answers[idx];
+                const isCorrect = userAnswer === q.correct;
+                const userAnswerText = userAnswer !== null ? q.options[userAnswer] : 'Tidak dijawab';
+                const correctAnswerText = q.options[q.correct];
+                
+                html += `
+                    <div class="card mb-3">
+                        <div class="card-header ${isCorrect ? 'bg-success text-white' : 'bg-danger text-white'}">
+                            <strong>Soal ${idx + 1}</strong>
+                            ${isCorrect ? '<i class="fas fa-check ms-2"></i>' : '<i class="fas fa-times ms-2"></i>'}
+                        </div>
+                        <div class="card-body">
+                            <p class="mb-2"><strong>Pertanyaan:</strong> ${q.question}</p>
+                            ${q.image ? `<img src="${q.image}" class="img-fluid rounded mb-2" style="max-height: 150px;"><br>` : ''}
+                            <p class="mb-1"><strong>Jawaban Kamu:</strong> ${userAnswerText}</p>
+                            <p class="mb-1"><strong>Jawaban Benar:</strong> ${correctAnswerText}</p>
+                            <p class="mb-0 text-primary"><strong>Pembahasan:</strong> ${q.explanation}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('discussionContent').innerHTML = html;
+            new bootstrap.Modal(document.getElementById('discussionModal')).show();
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            answers = new Array(questions.length).fill(null);
+            document.getElementById('studentName').value = '';
+            showPage('page1');
+        }
+
+        // Allow Enter key to start quiz
+        document.getElementById('studentName').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') startQuiz();
+        });
+    </script>
+</body>
+</html>
